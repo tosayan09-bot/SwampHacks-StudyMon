@@ -1,6 +1,8 @@
 import math
 import random
 from fastapi import FastAPI
+from fastapi import HTTPException
+from pydantic import BaseModel
 app=FastAPI()
 #Each class is a pokemon
     #Going to class gives your pokemon some XP. XP is used to gain health.
@@ -10,9 +12,12 @@ app=FastAPI()
 
 shop={"healthpotion":(10,'regain 20 percent health'), "tripleattack":(30,"attack thrice instantly"), "rockhard":(20,"increase defense by 10 percent for rest of fight")}
 
+class petInputData(BaseModel):
+    name:str
+    course:str
 class Studymon:
-    
-    def __init__(self, course,name,hp,atk,defn,xp=0,level=1,gold=100):
+#initalize    
+    def __init__(self, course,name,hp=100,atk=10,defn=10,xp=0,level=1,gold=100):
         self.course=course
         self.name=name
         self.xp=xp
@@ -22,16 +27,33 @@ class Studymon:
         self.stats={"health":hp*(1.5)**level,"attack":atk*(1.5)**level,"def":defn*(1.05)**level, "atkspeed":0.2, "itemwait":1}
         self.initstats=dict(self.stats)
         self.items=[]
-      
+    def to_dict(self):
+        return {"name": self.name,
+            "course": self.course,
+            "level": self.level,
+            "xp": self.xp,
+            "gold": self.gold,
+            "items": self.items,
+            "health": round(self.stats["health"]),
+            "attack": round(self.stats["attack"]),
+            "defense": round(self.stats["def"], 1)
+            }
+
+
+#habit stuff    
     def attendance_check(self, dailyAttendance):
         self.daily_attendance=dailyAttendance
-        
+#RPG stuff        
     def xpup(self,amount):
         #check for xp events
         if self.daily_attendance:
             self.xp+=amount
     def goldup(self,amount):
         #if study for 1 hr, get 10 gold for that study mon
+        #example function (asher)
+        #if amount<0:
+        #   raise ValueError("Gold can't be negative")
+        #self.gold+=amount * 10
         pass
     def goldspend(self,item):
         if self.gold>shop[item][0]:
@@ -61,7 +83,7 @@ class Studymon:
         print(f"level after check {self.level}")
     
     def attack(self,opponent):
-        dmg=int((1.5-random.random())*self.stats["attack"])-(1-opponent.stats["def"]/100)
+        dmg=int((1.5-random.random())*self.stats["attack"])*(1-opponent.stats["def"]/100)
         opponent.stats["health"]-= dmg
         return dmg
     def useitem(self,item,opponent):
@@ -72,16 +94,33 @@ class Studymon:
                     self.attack(opponent)
         if item=="rockhard":
             self.stats["defense"]*=1.1
+
             
 
 
 
-@app.get("/") 
+
+@app.post("/pets")
+def create_pet(data: petInputData):
+    key = data.name.lower()
+    pet = Studymon(data.course, data.name)
+    studymons[key] = pet
+    return pet.to_dict()
+@app.get("/pets")
+def list_pets():
+    return [pet.to_dict() for pet in studymons.values()]
+@app.post("/battle/{pstudymon}/{ostudymon}") 
+def battle_endpoint(pstudymon: str, ostudymon: str):
+    player = studymons.get(pstudymon)
+    opponent = studymons.get(ostudymon)
+    if not player or not opponent:
+        raise HTTPException(status_code=404, detail="Studymon not found")
 def battle(player,opponent):
     pinitstate=dict(player.stats)
     print(f"before battle: {pinitstate}")
     oinitstate=dict(opponent.stats)
 
+    winner=""
     turn=1
     battletime=0
     battlelog=[("attacker","attackerhealh","attackerdmg","opponenthealth","turn")]
@@ -128,14 +167,15 @@ def battle(player,opponent):
     opponent.stats=oinitstate
     return battlelog
 
-def hello():
-    return("test")
+
 
     
         
 
-pet1=Studymon("Math","Pikachu",hp=100,atk=10,defn=10)
-pet2=Studymon("Math","Blastoise",hp=1000,atk=10,defn=10)
+pet1=Studymon("Math","Pikachu")
+pet2=Studymon("Math","Blastoise")
+studymons={"pikachu": pet1, "blastoise": pet2}
+
 pet1.attendance_check(True)
 pet1.levelupcheck()
 pet1.xpup(25)
