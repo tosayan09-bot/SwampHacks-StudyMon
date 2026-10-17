@@ -76,7 +76,7 @@ class Studymon:
 
 
 
-     
+@app.get("/") 
 def battle(player,opponent):
     pinitstate=dict(player.stats)
     print(f"before battle: {pinitstate}")
@@ -106,18 +106,28 @@ def battle(player,opponent):
                 prio.useitem(prio.items(0),slow)
             if turn*slow.stats["atkspeed"]>=slow.stats["itemwait"] and slow.items:
                 slow.useitem(slow.items(0),prio)
+        
 
         usable = False
         #print(f"{player.name} attacked {opponent.name}! {opponent.name} took {pdmg} damage, and is at {opponent.stats['health']} health!")        
         #print(f"{opponent.name} attacked {player.name}! {player.name} took {odmg} damage, and is at {player.stats['health']} health!")
 
         turn+=1
+    if player.stats["health"]<=0 and opponent.stats["health"]>0:
+        winner=opponent
+    elif opponent.stats["health"]<=0 and player.stats["health"]>0:
+        winner=player
+    else:
+        winner.name="None"
+    battlelog.append(winner.name)
+
+
     
     player.stats=pinitstate
     print(f"after:{player.stats}")
     opponent.stats=oinitstate
     return battlelog
-@app.get("/") 
+
 def hello():
     return("test")
 
@@ -133,4 +143,5 @@ print(pet1.xp)
 pet1.levelupcheck()
 pet1.goldspend("healthpotion")
 
-battle(pet1,pet2)
+x=battle(pet1,pet2)
+print(x)
