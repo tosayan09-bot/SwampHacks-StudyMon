@@ -1,13 +1,13 @@
 @font-face {
     font-family: 'pixelated';
-    src: url('./assets/pixelated.ttf') format('truetype');
+    src: url('./pixelated.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
   font-family: 'gomePixel';
-  src: url('./assets/gomePixel.otf') format('opentype');
+  src: url('./gomePixel.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -87,4 +87,6 @@ h2 {
 }
 p {
   margin: 0;
+  font-family: 'gomePixel', sans-serif;
+  font-size:20px;
 }

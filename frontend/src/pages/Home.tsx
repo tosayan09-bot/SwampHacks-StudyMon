@@ -1,15 +1,24 @@
+import { useNavigate } from 'react-router-dom'
+import '../Home.css'
+import '../index.css'
 function Home(){
+  const navigate = useNavigate()
+  function goToPets(){
+    navigate('/Pets')
+  }
     return(
-        <>
-        <section id="center">
+      <>
+      <section id="center">
         <div>
           <h1>Meet Studymon</h1>
           <p>Academic habit tracker and study buddy fighter</p>
+          <button 
+            className = "startButton"
+            onClick={goToPets}>
+            <p>See pets</p>
+          </button>
         </div>
-        
       </section>
-
-      <div className="ticks"></div>
 
         <section id="explanation">
         <div id="stepOne">
