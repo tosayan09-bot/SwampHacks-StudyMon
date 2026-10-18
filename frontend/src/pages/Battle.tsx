@@ -1,11 +1,9 @@
 import Deerhappy from '../assets/Deerhappy.png'
-import Bearhappyanim from '../assets/Bearhappy.png'
+import Bearhappy from '../assets/Bearhappy.png'
 import Bearidle from '../assets/Bearhappy.png'
-import Bunnyhappy from '../assets/Bunny happy.png'
 import Bunnyidle from '../assets/Bunnyidle.png'
-import Deerhappy from '../assets/Deerhappy.png'
-import Deeridle from '../assets/Deeridle.png'
 import Deersad from '../assets/Deersad.png'
+import Bunnysad from '../assets/Bunnysad.png'
 
 
 function Battle(){
@@ -72,11 +70,13 @@ function Battle(){
                     <p className = "friendpetinfo"> attack: 97 </p>
                     <p className = "friendpetinfo"> defense: 95 </p>
                     <p className = "friendpetinfo"> health: 100 </p>
+                    <img src = {Bearhappy} alt = "Alicia" className = "Alicia"/>
                 <p className = "indent"> Jaedon </p>
                     <p className = "friendpetinfo"> lvl: 4</p>
                     <p className = "friendpetinfo"> attack: 49 </p>
                     <p className = "friendpetinfo"> defense: 43 </p>
                     <p className = "friendpetinfo"> health: 50 </p>
+                    <img src = {Bearidle} alt = "Jaedon" className = "Jaedon"
         </section>
 
         </>
