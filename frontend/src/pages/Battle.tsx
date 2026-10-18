@@ -76,7 +76,7 @@ function Battle(){
                     <p className = "friendpetinfo"> attack: 49 </p>
                     <p className = "friendpetinfo"> defense: 43 </p>
                     <p className = "friendpetinfo"> health: 50 </p>
-                    <img src = {Bearidle} alt = "Jaedon" className = "Jaedon"
+                    <img src = {Bearidle} alt = "Jaedon" className = "Jaedon"/>
         </section>
 
         </>
