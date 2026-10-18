@@ -1,9 +1,6 @@
 import Deerhappy from '../assets/Deerhappy.png'
 import Bearidle from '../assets/Bearidle.png'
 import Bunnyidle from '../assets/Bunnyidle.png'
-import Deersad from '../assets/Deersad.png'
-import Bunnysad from '../assets/Bunnysad.png'
-
 
 function Samarth() {
     return(

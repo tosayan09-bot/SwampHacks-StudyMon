@@ -1,7 +1,7 @@
-
 import Bearidle from '../assets/Bearidle.png'
 import Bunnyidle from '../assets/Bunnyidle.png'
 import Deersad from '../assets/Deersad.png'
+
 
 function Owen(){
     return(
