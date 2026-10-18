@@ -2,8 +2,22 @@ import math
 import random
 from fastapi import FastAPI
 from fastapi import HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 app=FastAPI()
+origins = [
+    "https://vercel.com/swamphacks26/swamp-hacks-study-mon/5QgJ4bNH2VMCTjdVQibDA8KpHowL",  # Your Vercel domain
+    "http://localhost:5173",             # Local Vite dev server (if applicable)
+    "http://localhost:3000",             # Local React dev server (if applicable)
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 #Each class is a pokemon
     #Going to class gives your pokemon some XP. XP is used to gain health.
     #Missing a class makes you lose 15 XP coins 
@@ -24,6 +38,9 @@ class Studymon:
         self.daily_attendance=False
         self.level=level
         self.gold=gold
+        self.atk=atk
+        self.defn=defn
+        self.hp=hp
         self.stats={"health":hp*(1.5)**level,"attack":atk*(1.5)**level,"def":defn*(1.05)**level, "atkspeed":0.2, "itemwait":1}
         self.initstats=dict(self.stats)
         self.items=[]
@@ -60,8 +77,9 @@ class Studymon:
             self.items.append(item)
             print(f"success!: {self.items}")
     def statchange(self):
-        self.stats["hp"]=(1.5)**self.level,,"def":defn*(1.05)**level
-        self.stats["attack"]=atk*(1.5)**level            
+        self.stats["health"]=self.hp*(1.5)**self.level
+        self.stats["def"]=self.defn*(1.05)**self.level
+        self.stats["attack"]=self.atk*(1.5)**self.level            
     def levelcheck(self):
         reqxp=10
         print(f"level before check {self.level}")
@@ -81,7 +99,7 @@ class Studymon:
             #if bigger, add one level
             #keep going until you run out of xp to lecel
             
-            
+        self.statchange()    
         print(f"level after check {self.level}")
     
     def attack(self,opponent):
@@ -111,6 +129,13 @@ def create_pet(data: petInputData):
 @app.get("/pets")
 def list_pets():
     return [pet.to_dict() for pet in studymons.values()]
+@app.put("/pets")
+def update_xp(studymon: str, amount: int):
+    pet = studymons.get(studymon.lower())
+    pet.xp+=amount
+    pet.levelcheck()
+    return pet.to_dict()
+
 
 
 def battle(player,opponent):
@@ -131,13 +156,11 @@ def battle(player,opponent):
     
     while player.stats["health"]>0 and opponent.stats["health"]>0:
 
-        if turn*player.stats["atkspeed"]<=turn*opponent.stats["atkspeed"]:
-                pdmg=player.attack(opponent)
-                battlelog.append((player.name,player.stats["health"],pdmg,opponent.stats["health"],turn))
         
-        else:
-            odmg=opponent.attack(player)
-            battlelog.append((opponent.name,opponent.stats["health"],odmg,player.stats["health"],turn))
+        pdmg=prio.attack(slow)
+        battlelog.append((player.name,player.stats["health"],pdmg,opponent.stats["health"],turn))
+        odmg=slow.attack(prio)
+        battlelog.append((opponent.name,opponent.stats["health"],odmg,player.stats["health"],turn))
         if usable:
             if turn*prio.stats["atkspeed"]>=player.stats["itemwait"] and prio.items:
                 prio.useitem(prio.items(0),slow)
@@ -167,8 +190,8 @@ def battle(player,opponent):
 
 @app.post("/battle/{pstudymon}/{ostudymon}") 
 def battle_endpoint(pstudymon: str, ostudymon: str):
-    player = studymons.get(pstudymon)
-    opponent = studymons.get(ostudymon)
+    player = studymons.get(pstudymon.lower())
+    opponent = studymons.get(ostudymon.lower())
     if not player or not opponent:
         raise HTTPException(status_code=404, detail="Studymon not found")
     return battle(player,opponent)

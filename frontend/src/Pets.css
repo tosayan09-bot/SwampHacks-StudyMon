@@ -1,0 +1,35 @@
+.pets-container {
+  display: flex;
+}
+
+.left{
+  flex: 1;
+  padding:10px;
+  background-color: rgba(255, 255, 242, 0.55);
+  max-height:600px;
+  margin-top:100px;
+  line-height: 4;
+ 
+}
+.right {
+  flex: 0.8;
+  padding:10px;
+}
+
+.button{
+  width:70px;
+  height: 70px;
+  margin:10px;
+  margin-top:350px;
+  cursor: pointer;
+  y:500;
+}
+
+.button-left{
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+
+}
+
+.button-right{
+  clip-path: polygon(100% 50%, 0 0, 0 100%);
+}
