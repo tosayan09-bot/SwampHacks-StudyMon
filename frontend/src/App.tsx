@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/Home'
 import Pets from './pages/Pets'
 import Battle from './pages/Battle'
+import Ethan from './pages/Ethan'
+import Owen from './pages/owen'
+import Samarth from './pages/samarth'
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/pets" element={<Pets />} />
         <Route path="/battle" element={<Battle />} />
+        <Route path="/friends/ethan" element={<Ethan />} />
+        <Route path="/friends/owen" element={<Owen />} />
+        <Route path="/friends/samarth" element={<Samarth />} />
       </Routes>
     </BrowserRouter>
   )

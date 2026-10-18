@@ -1,3 +1,5 @@
+
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -186,3 +188,34 @@
 .friendpetinfo {
     text-transform: uppercase;
 }
+
+.hiimbunny {
+    width: 200px;
+    height: 300px
+}
+
+.deer {
+    width: 270px;
+    height: 300px
+}
+
+.manorbear {
+    width: 250px;
+}
+
+#friendslist {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: #ddc7a4;
+    column-gap: 50px;
+    gap: 1rem
+}
+#friendslist > div {
+  padding: 1.5rem;
+  background-color: #ddc7a4;
+  border: 2px solid #e8dce1;
+  border-radius: 8px;
+}
+
+
+
