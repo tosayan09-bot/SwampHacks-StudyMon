@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 app=FastAPI()
 origins = [
-    "https://swamp-hacks-study-mon-woad.vercel.app",  # Your Vercel domain
+    "https://vercel.com/swamphacks26/swamp-hacks-study-mon/5QgJ4bNH2VMCTjdVQibDA8KpHowL",  # Your Vercel domain
     "http://localhost:5173",             # Local Vite dev server (if applicable)
     "http://localhost:3000",             # Local React dev server (if applicable)
 ]
