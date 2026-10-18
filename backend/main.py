@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 app=FastAPI()
 origins = [
-    "https://vercel.com/swamphacks26/swamp-hacks-study-mon/5QgJ4bNH2VMCTjdVQibDA8KpHowL"  # Your Vercel domain
+    "https://swamp-hacks-study-mon-woad.vercel.app",  # Your Vercel domain
     "http://localhost:5173",             # Local Vite dev server (if applicable)
     "http://localhost:3000",             # Local React dev server (if applicable)
 ]
@@ -200,9 +200,12 @@ def battle_endpoint(pstudymon: str, ostudymon: str):
     
         
 
-pet1=Studymon("Math","Pikachu")
-pet2=Studymon("Math","Blastoise")
-studymons={"pikachu": pet1, "blastoise": pet2}
+
+studymons = {
+    "bunny": Studymon("Math", "Bunny"),
+    "deer": Studymon("English", "Deer"),
+    "bear": Studymon("Science", "Bear"),
+}
 
 """pet1.attendance_check(True)
 pet1.levelcheck()
