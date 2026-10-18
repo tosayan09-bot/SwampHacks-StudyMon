@@ -2,8 +2,22 @@ import math
 import random
 from fastapi import FastAPI
 from fastapi import HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 app=FastAPI()
+origins = [
+    "https://swamp-hacks-study-mon-woad.vercel.app",  # Your Vercel domain
+    "http://localhost:5173",             # Local Vite dev server (if applicable)
+    "http://localhost:3000",             # Local React dev server (if applicable)
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 #Each class is a pokemon
     #Going to class gives your pokemon some XP. XP is used to gain health.
     #Missing a class makes you lose 15 XP coins 
