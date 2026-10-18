@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 app=FastAPI()
 origins = [
-    "https://swamp-hacks-study-mon-woad.vercel.app",  # Your Vercel domain
+    "https://vercel.com/swamphacks26/swamp-hacks-study-mon/5QgJ4bNH2VMCTjdVQibDA8KpHowL"  # Your Vercel domain
     "http://localhost:5173",             # Local Vite dev server (if applicable)
     "http://localhost:3000",             # Local React dev server (if applicable)
 ]
@@ -163,9 +163,9 @@ def battle(player,opponent):
         battlelog.append((opponent.name,opponent.stats["health"],odmg,player.stats["health"],turn))
         if usable:
             if turn*prio.stats["atkspeed"]>=player.stats["itemwait"] and prio.items:
-                prio.useitem(prio.items(0),slow)
+                prio.useitem(prio.items[0],slow)
             if turn*slow.stats["atkspeed"]>=slow.stats["itemwait"] and slow.items:
-                slow.useitem(slow.items(0),prio)
+                slow.useitem(slow.items[0],prio)
         
 
         usable = False
@@ -204,7 +204,7 @@ pet1=Studymon("Math","Pikachu")
 pet2=Studymon("Math","Blastoise")
 studymons={"pikachu": pet1, "blastoise": pet2}
 
-pet1.attendance_check(True)
+"""pet1.attendance_check(True)
 pet1.levelcheck()
 pet1.xpup(25)
 print(pet1.xp)
@@ -213,4 +213,4 @@ print(pet1.to_dict())
 pet1.goldspend("healthpotion")
 
 x=battle(pet1,pet2)
-print(x)
+print(x)"""
