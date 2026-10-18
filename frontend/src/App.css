@@ -152,6 +152,7 @@
   }
 }
 
+
 #spacer {
   height: 88px;
   border-top: 1px solid var(--border);
@@ -180,4 +181,8 @@
     right: 0;
     border-right-color: var(--border);
   }
+}
+
+.friendpetinfo {
+    text-transform: uppercase;
 }
